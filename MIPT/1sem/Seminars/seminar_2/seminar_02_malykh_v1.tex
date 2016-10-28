@@ -1,0 +1,147 @@
+\documentclass{beamer}
+\usepackage{etex}
+\usepackage{../beamer_present}
+
+\title[\hbox to 56mm{Cross-Validation\hfill\insertframenumber\,/\,\inserttotalframenumber}]
+    {Seminar 2. Cross-Validation. Pandas.}
+\author[Valentin\,Malykh]
+    {Valentin Malykh}
+\institute[MIPT]{MIPT}
+
+\date{16/02/2016 \vfill Moscow}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Table of content}
+  \tableofcontents
+\end{frame}
+
+\section{Main concept of ML}
+\subsection{Task of machine learning}
+\begin{frame}{Task of machine learning}
+$X$~---~set of objects\\
+$Y$~---~set of labels\\
+$y:X\rightarrow Y$~---~target function\\
+\bigskip
+\medskip
+$\{x_1,\dots,x_\ell\}\subset X$~---~training sample\\
+$y_i = y(x_i)$~---~known answers\\
+\bigskip
+\medskip
+The goal is to find:\\
+$a: X \rightarrow Y$~---~algorithm or decision function approximating $y$ on $Y$\\
+\end{frame}
+
+\subsection{Definitions}
+\begin{frame}{Types of tasks}
+\textbf{Classification}
+\begin{itemize}
+\item $Y=\{-1,+1\}$~---~two classes (binary)
+\item $Y=\{1,\dots,M\}$~---~multi-label classification (case A)
+\item $Y=\{0,1\}^{M}$~---~multi-label classification (case B)
+\end{itemize}
+\medskip
+\textbf{Regression}
+\begin{itemize}
+\item $Y=R$ or $Y=R^m$~---~continuous space of $Y$
+\end{itemize}
+\medskip
+\textbf{Ranking task}
+\begin{itemize}
+\item $Y$~---~finite ordered space
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Models and algorithms}
+\textbf{Predictive model}~---~parametric family of functions:
+$$A=\{g(X,\theta | \theta\in\Theta)\},$$
+where $g: X\times \Theta \rightarrow Y$~---~some defined function,\\
+$\Theta$~---~set of allowable values of $\theta.$\\
+\bigskip
+\bigskip
+\bigskip
+\textbf{Learning algorithm} is mapping
+$\mu : \{ X\times Y \}^\ell \rightarrow A,$
+where $X=\{x_i,y_i\}_{i=1}^{\ell}$ and $a\in A.$
+\end{frame}
+
+\begin{frame}{Loss function}
+$\mathcal{L}(a,x)$~---~error value of algorithm $a\in A$ on object $x\in X.$\\
+\medskip
+\textbf{For classification:}\\
+$\mathcal{L}(a,x) = [a(x)\neq y(x)]$~---~indicator\\
+\medskip
+\textbf{For regression:}\\
+$\mathcal{L}(a,x) = |a(x) - y(x)|$\\
+$\mathcal{L}(a,x) = (a(x) - y(x))^2$\\
+\medskip
+\textbf{Empirical risk:}\\
+$$Q(a,X^\ell) = \frac{1}{\ell}\sum_{i=1}^{l}\mathcal{L}(a,x_i).$$
+\end{frame}
+
+
+\section{Cross-Validation}
+\subsection{Overfitting}
+\begin{frame}{Overfitting}
+    \begin{itemize}
+    \item \textbf{Why?}\\
+    ---~Redundant complexity of $\Theta$\\
+    ---~Finite size of training sample
+    \item \textbf{How to detect?}\\
+    ---~Split data on \textit{training} and \textit{test} sets
+    \item \textbf{How to minimize?}\\
+    ---~restrictions on $\theta$\\
+    ---~minimize theoretical estimation\\
+    ---~minimize (carefully!!!) cross-validation estimations
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Overfitting example}
+    \includegraphics[scale=0.23]{pic/overfitting.eps}
+\end{frame}
+
+\subsection{Cross-Validation}
+\begin{frame}{CV procedure}
+    \begin{itemize}
+    \item Splitting $X=\{x_i,y_i\}^l_{i=1} = X_n^m\cup X_n^k$ on 2 parts in $N$ different ways ($k+m = l$)\\
+    \bigskip
+    \item For each $n\in\{1,\dots,N\}$ train $a_n = \mu(X_n^m).$ Then calculate quality measure $Q_n=Q(a_n,X^k_n)$ \\
+    \bigskip
+    \item $CV(\mu,X^l)=\frac{1}{N}\sum_{n=1}^N Q(a_n,X^k_n)$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Types of CV}
+\begin{itemize}
+\item \textbf{Complete CV}\\
+CV for all $C_\ell^k$ partitions for some $k.$
+\bigskip
+\item \textbf{Random partition CV}\\
+CV for some number of random partitions from $C_\ell^k.$
+\bigskip
+\item \textbf{Leave-one-out CV (LOO)}\\
+Complete CV for $k=1$ $\Rightarrow$ $N=l$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Types of CV}
+\begin{itemize}
+\item \textbf{Hold-out CV}\\
+CV for one random partitions for some $k,$ $N = 1.$\\
+Not the same with control on test set!!!
+\bigskip
+\item \textbf{$q\text{-fold}$ CV}\\
+For $k_1,\dots,k_q,$ $k_1+\dots+k_q = l:$
+$$X^l = X_1^{k_1}\cup \dots \cup X_q^{k_q}.$$
+Then $CV(\mu,X^l)=\frac{1}{q}\sum_{n=1}^q Q(\mu(X^l \setminus X^{k_n}_n),X^k_n)$
+\bigskip
+\item \textbf{$r\times q\text{-fold}$ CV}\\
+$r$ iterations of $q\text{-fold}$ CV.
+\end{itemize}
+\end{frame}
+
+\end{document}

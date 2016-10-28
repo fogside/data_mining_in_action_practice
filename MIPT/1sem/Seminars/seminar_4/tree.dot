@@ -1,0 +1,32 @@
+digraph Tree {
+node [shape=box] ;
+0 [label="relationship <= 0.5\ngini = 0.3659\nsamples = 21815\nvalue = [16557, 5258]\nclass = high50k"] ;
+1 [label="education-num <= 12.5\ngini = 0.4952\nsamples = 8805\nvalue = [4836, 3969]\nclass = high50k"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label="capital-gain <= 5095.5\ngini = 0.444\nsamples = 6151\nvalue = [4105, 2046]\nclass = high50k"] ;
+1 -> 2 ;
+3 [label="gini = 0.4176\nsamples = 5832\nvalue = [4100, 1732]\nclass = high50k"] ;
+2 -> 3 ;
+4 [label="gini = 0.0309\nsamples = 319\nvalue = [5, 314]\nclass = less50k"] ;
+2 -> 4 ;
+5 [label="capital-gain <= 5095.5\ngini = 0.3991\nsamples = 2654\nvalue = [731, 1923]\nclass = less50k"] ;
+1 -> 5 ;
+6 [label="gini = 0.4378\nsamples = 2249\nvalue = [728, 1521]\nclass = less50k"] ;
+5 -> 6 ;
+7 [label="gini = 0.0147\nsamples = 405\nvalue = [3, 402]\nclass = less50k"] ;
+5 -> 7 ;
+8 [label="capital-gain <= 7073.5\ngini = 0.1785\nsamples = 13010\nvalue = [11721, 1289]\nclass = high50k"] ;
+0 -> 8 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+9 [label="relationship <= 4.5\ngini = 0.1443\nsamples = 12707\nvalue = [11712, 995]\nclass = high50k"] ;
+8 -> 9 ;
+10 [label="gini = 0.0946\nsamples = 11753\nvalue = [11168, 585]\nclass = high50k"] ;
+9 -> 10 ;
+11 [label="gini = 0.4901\nsamples = 954\nvalue = [544, 410]\nclass = high50k"] ;
+9 -> 11 ;
+12 [label="capital-gain <= 30961.5\ngini = 0.0576\nsamples = 303\nvalue = [9, 294]\nclass = less50k"] ;
+8 -> 12 ;
+13 [label="gini = 0.0292\nsamples = 270\nvalue = [4, 266]\nclass = less50k"] ;
+12 -> 13 ;
+14 [label="gini = 0.2571\nsamples = 33\nvalue = [5, 28]\nclass = less50k"] ;
+12 -> 14 ;
+}
